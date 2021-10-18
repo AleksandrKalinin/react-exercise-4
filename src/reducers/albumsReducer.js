@@ -1,4 +1,4 @@
-import { GET_ALBUMS } from '../types/types';
+import { GET_ALBUMS, ADD_ALBUM } from '../types/types';
 
 const initialState = {
 	albums: []
@@ -9,6 +9,10 @@ const albumsReducer = (state = initialState, action) => {
 		case GET_ALBUMS:
 			return {
 				...state, albums: action.payload
+			}
+		case ADD_ALBUM:
+			return {
+				...state, albums: [...state.albums, action.payload]
 			}
 		default: return state;	
 	}

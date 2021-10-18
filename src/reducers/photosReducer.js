@@ -1,4 +1,4 @@
-import { GET_PHOTOS } from '../types/types';
+import { GET_PHOTOS, ADD_PHOTO } from '../types/types';
 
 const initialState = {
 	photos: []
@@ -10,6 +10,10 @@ const photosReducer = (state = initialState, action) => {
 			return {
 				...state, photos: action.payload
 			}
+		case ADD_PHOTO:
+			return {
+				...state, photos: [...state.photos, action.payload]
+			}			
 		default: return state;	
 	}
 }

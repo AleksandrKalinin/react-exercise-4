@@ -1,6 +1,5 @@
 import { useState, useEffect, Fragment} from 'react';
 import { Container, Row, Col, Table, Card, Button } from 'react-bootstrap';
-import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAlbums, getPhotos, addAlbum, addPhoto } from './actions/index';
@@ -24,6 +23,7 @@ function Content() {
   const [photosShown, openPhotos] = useState(false);
 
   const [currentAlbum, setCurrentAlbum] = useState(null);
+  const [currentAlbumPhotos, setCurrentAlbumPhotos] = useState(null);
 
   useEffect(() => {
   	setStatus(true);
@@ -37,15 +37,10 @@ function Content() {
   	}
   }, [photosList])
 
-/*
-  useEffect(() => {
-  	openPhotos(true);
-  	setPhotos(photosList);
-  }, [photosList])
-*/
   const showPhotos = (id) => {
   	dispatch(getPhotos(id))
   	setCurrentAlbum(id);
+  	console.log(photosList);
   }
 
   const createAlbum = () => {
@@ -55,12 +50,6 @@ function Content() {
   	newItem.title = 'New item';
   	newItem.photos = [];
   	dispatch(addAlbum(newItem));
-  	console.log(allState);
-  	//console.log(albums);
-  	//console.log('ad');
-  	/*let newAlbums = albums;
-  	newAlbums.push(newItem);
-  	setAlbums([...newAlbums]); */
   }
 
   const createPhoto = () => {
@@ -69,9 +58,6 @@ function Content() {
   	photo.url = 'token-image.jpg';
   	photo.id = uuidv4();
   	dispatch(addPhoto(photo));
-  	/*let newPhotos = photos;
-  	newPhotos.push(photo);
-  	setPhotos([...newPhotos])*/
   }
 
     return (
