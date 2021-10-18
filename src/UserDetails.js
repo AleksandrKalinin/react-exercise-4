@@ -1,16 +1,8 @@
-import { useState, useEffect } from 'react';
 import UserInfo from './UserInfo';
 import Avatar from './Avatar';
 import {Container, Row, Col} from 'react-bootstrap';
 
 function UserDetails(props) {
-
-  const [data, setData] = useState(props.data);
-
-  useEffect(() => {
-    setData(props.data)
-  }, [props.data])
-
     return (
       <Container>
         <Row>
@@ -18,7 +10,7 @@ function UserDetails(props) {
             <Avatar />
           </Col>
           <Col> 
-            <UserInfo data={data} />
+            <UserInfo />
           </Col>      
         </Row>
       </Container> 

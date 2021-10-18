@@ -10,10 +10,9 @@ function Content() {
 
   const albumsList = useSelector(state => state.albumsArray.albums);
   const photosList = useSelector(state => state.photosArray.photos);
-  const allState = useSelector(state => state);
 
   useEffect(() => {
-  	dispatch(getAlbums())
+    dispatch(getAlbums())
   }, []);
 
   const [albums, setAlbums] = useState([]);
@@ -23,41 +22,40 @@ function Content() {
   const [photosShown, openPhotos] = useState(false);
 
   const [currentAlbum, setCurrentAlbum] = useState(null);
-  const [currentAlbumPhotos, setCurrentAlbumPhotos] = useState(null);
 
   useEffect(() => {
-  	setStatus(true);
-  	setAlbums(albumsList);
+    setAlbums(albumsList);
+    setStatus(true);
   }, [albumsList])
 
   useEffect(() => {
-  	if (photosList.length !== 0) {
-  		openPhotos(true);
-  		setPhotos(photosList);   		
-  	}
+    if (isSuccesful === true) {
+      openPhotos(true);
+      setPhotos(photosList);      
+    }
   }, [photosList])
 
   const showPhotos = (id) => {
-  	dispatch(getPhotos(id))
-  	setCurrentAlbum(id);
-  	console.log(photosList);
+    dispatch(getPhotos(id))
+    setCurrentAlbum(id);
+    console.log(photosList);
   }
 
   const createAlbum = () => {
-  	const newItem = {};
-  	newItem.id = uuidv4();
-  	newItem.userId = newItem.id;
-  	newItem.title = 'New item';
-  	newItem.photos = [];
-  	dispatch(addAlbum(newItem));
+    const newItem = {};
+    newItem.id = uuidv4();
+    newItem.userId = newItem.id;
+    newItem.title = 'New item';
+    newItem.photos = [];
+    dispatch(addAlbum(newItem));
   }
 
   const createPhoto = () => {
-  	const photo = {};
-  	photo.title = 'Lorem ipsum dolor sit ament';
-  	photo.url = 'token-image.jpg';
-  	photo.id = uuidv4();
-  	dispatch(addPhoto(photo));
+    const photo = {};
+    photo.title = 'Lorem ipsum dolor sit ament';
+    photo.url = 'token-image.jpg';
+    photo.id = uuidv4();
+    dispatch(addPhoto(photo));
   }
 
     return (
@@ -81,9 +79,9 @@ function Content() {
                       </tr>
                     )}
                     <tr>
-	                    <td colSpan="2">
-	                    	<Button onClick={() => createAlbum()} className="styled-button">Add new album</Button>
-	                    </td>
+                      <td colSpan="2">
+                        <Button onClick={() => createAlbum()} className="styled-button">Add new album</Button>
+                      </td>
                     </tr>                      
                   </tbody>
                 </Table>                    
@@ -92,33 +90,33 @@ function Content() {
           </Row>
         : null }
         { photosShown ?
-        	<Fragment>
-	          <Row>
-	            <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
-	              <Button onClick={() => openPhotos(false)} className="styled-button">Back to albums</Button>
-	            </Col>
-	            <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
-	              <p className="current-album">Photos for album {currentAlbum}</p>
-	            </Col>
-	            {photos.map((item) => 
-	              <Col md={4} lg={4} xs={4} key={item.id}>
-	                <Card className="styled-card">
-	                  <Card.Img variant="top" src={item.url} />
-	                  <Card.Body>
-	                    <Card.Text>
-	                      {item.title}
-	                    </Card.Text>
-	                  </Card.Body>
-	                </Card>
-	              </Col>
-	            )}
-	          </Row>
-	          <Row>
-	            <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
-	              <Button onClick={() => createPhoto()} className="styled-button">Add photo</Button>
-	            </Col>	          
-	          </Row>
-	        </Fragment>  
+          <Fragment>
+            <Row>
+              <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
+                <Button onClick={() => openPhotos(false)} className="styled-button">Back to albums</Button>
+              </Col>
+              <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
+                <p className="current-album">Photos for album {currentAlbum}</p>
+              </Col>
+              {photos.map((item) => 
+                <Col md={4} lg={4} xs={4} key={item.id}>
+                  <Card className="styled-card">
+                    <Card.Img variant="top" src={item.url} />
+                    <Card.Body>
+                      <Card.Text>
+                        {item.title}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )}
+            </Row>
+            <Row>
+              <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
+                <Button onClick={() => createPhoto()} className="styled-button">Add photo</Button>
+              </Col>            
+            </Row>
+          </Fragment>  
         : null }
       </Container>
     );
