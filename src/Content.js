@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment} from 'react';
+import { useState, useEffect, useCallback, Fragment} from 'react';
 import { Container, Row, Col, Table, Card, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,8 +38,9 @@ function Content() {
   const showPhotos = (id) => {
     dispatch(getPhotos(id))
     setCurrentAlbum(id);
-    console.log(photosList);
   }
+
+  const callFunc = useCallback((item) => showPhotos(item.id), []);  
 
   const createAlbum = () => {
     const newItem = {};
@@ -73,14 +74,14 @@ function Content() {
                   </thead>
                   <tbody>
                     {albums.map((item, index) => 
-                      <tr key={item.id} onClick = {() => showPhotos(item.id)}>
+                      <tr key={item.id} onClick = {showPhotos.bind(null, item.id)}>
                         <td>{item.id}</td>
                         <td>{item.title}</td>
                       </tr>
                     )}
                     <tr>
                       <td colSpan="2">
-                        <Button onClick={() => createAlbum()} className="styled-button">Add new album</Button>
+                        <Button onClick={createAlbum} className="styled-button">Add new album</Button>
                       </td>
                     </tr>                      
                   </tbody>
@@ -113,7 +114,7 @@ function Content() {
             </Row>
             <Row>
               <Col md={12} lg={12} xs={12} style={{ justifyContent: 'center' }}>
-                <Button onClick={() => createPhoto()} className="styled-button">Add photo</Button>
+                <Button onClick={createPhoto} className="styled-button">Add photo</Button>
               </Col>            
             </Row>
           </Fragment>  
